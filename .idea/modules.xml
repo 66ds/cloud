@@ -2,10 +2,19 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/blog-article/blog-article.iml" filepath="$PROJECT_DIR$/blog-article/blog-article.iml" />
+      <module fileurl="file://$PROJECT_DIR$/blog-auth/blog-auth.iml" filepath="$PROJECT_DIR$/blog-auth/blog-auth.iml" />
       <module fileurl="file://$PROJECT_DIR$/blog-cloud.iml" filepath="$PROJECT_DIR$/blog-cloud.iml" />
+      <module fileurl="file://$PROJECT_DIR$/blog-comment/blog-comment.iml" filepath="$PROJECT_DIR$/blog-comment/blog-comment.iml" />
+      <module fileurl="file://$PROJECT_DIR$/blog-common/blog-common.iml" filepath="$PROJECT_DIR$/blog-common/blog-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/blog-file/blog-file.iml" filepath="$PROJECT_DIR$/blog-file/blog-file.iml" />
       <module fileurl="file://$PROJECT_DIR$/blog-gateway/blog-gateway.iml" filepath="$PROJECT_DIR$/blog-gateway/blog-gateway.iml" />
       <module fileurl="file://$PROJECT_DIR$/blog-label/blog-label.iml" filepath="$PROJECT_DIR$/blog-label/blog-label.iml" />
       <module fileurl="file://$PROJECT_DIR$/blog-message/blog-message.iml" filepath="$PROJECT_DIR$/blog-message/blog-message.iml" />
+      <module fileurl="file://$PROJECT_DIR$/blog-rabbitmq/blog-rabbitmq.iml" filepath="$PROJECT_DIR$/blog-rabbitmq/blog-rabbitmq.iml" />
+      <module fileurl="file://$PROJECT_DIR$/blog-search/blog-search.iml" filepath="$PROJECT_DIR$/blog-search/blog-search.iml" />
+      <module fileurl="file://$PROJECT_DIR$/blog-sort/blog-sort.iml" filepath="$PROJECT_DIR$/blog-sort/blog-sort.iml" />
+      <module fileurl="file://$PROJECT_DIR$/blog-user/blog-user.iml" filepath="$PROJECT_DIR$/blog-user/blog-user.iml" />
       <module fileurl="file://$PROJECT_DIR$/blog-link/link.iml" filepath="$PROJECT_DIR$/blog-link/link.iml" />
     </modules>
   </component>
