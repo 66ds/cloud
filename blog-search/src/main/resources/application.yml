@@ -1,0 +1,19 @@
+spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    serialization:
+        write-dates-as-timestamps: true # 使用数值timestamp表示日期   true: 时间戳优先级高于 日期格式; false:则显示日期格式
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      server-addr: 115.159.106.213:8848
+      config:
+        import-check:
+          enabled: false
+server:
+  port: 12001
+log:
+  path: ./blog-article
+

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/blog-gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/blog-auth/pom.xml" />
+        <option value="$PROJECT_DIR$/blog-user/pom.xml" />
+        <option value="$PROJECT_DIR$/blog-article/pom.xml" />
+        <option value="$PROJECT_DIR$/blog-search/pom.xml" />
+        <option value="$PROJECT_DIR$/blog-common/pom.xml" />
+        <option value="$PROJECT_DIR$/blog-api/pom.xml" />
+        <option value="$PROJECT_DIR$/blog-label/pom.xml" />
+        <option value="$PROJECT_DIR$/blog-sort/pom.xml" />
+        <option value="$PROJECT_DIR$/blog-comment/pom.xml" />
+        <option value="$PROJECT_DIR$/blog-friend/pom.xml" />
+        <option value="$PROJECT_DIR$/blog-link/pom.xml" />
+        <option value="$PROJECT_DIR$/blog-message/pom.xml" />
+        <option value="$PROJECT_DIR$/2/pom.xml" />
+        <option value="$PROJECT_DIR$/blog-login1/pom.xml" />
+        <option value="$PROJECT_DIR$/blog-login2/pom.xml" />
+        <option value="$PROJECT_DIR$/blog-rabbitmq/pom.xml" />
+      </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/2/pom.xml" />
+        <option value="$PROJECT_DIR$/blog-api/pom.xml" />
+        <option value="$PROJECT_DIR$/blog-friend/pom.xml" />
+        <option value="$PROJECT_DIR$/blog-login1/pom.xml" />
+        <option value="$PROJECT_DIR$/blog-login2/pom.xml" />
+        <option value="$PROJECT_DIR$/blog-model/pom.xml" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" project-jdk-name="temurin-17" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>

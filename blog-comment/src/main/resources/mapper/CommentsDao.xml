@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.qianbing.comment.dao.CommentsDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.qianbing.common.entity.CommentsEntity" id="commentsMap">
+        <result property="commentId" column="comment_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="articleId" column="article_id"/>
+        <result property="commentLikeCount" column="comment_like_count"/>
+        <result property="commentDate" column="comment_date"/>
+        <result property="commentContent" column="comment_content"/>
+        <result property="parentCommentId" column="parent_comment_id"/>
+        <result property="commentChrome" column="comment_chrome"/>
+        <result property="commentSys" column="comment_sys"/>
+        <result property="isRead" column="is_read"/>
+    </resultMap>
+
+   <!-- 获取未读评论信息 -->
+    <select id="getNoReadCommentInfo" resultType="com.qianbing.comment.vo.NoReadCommentVo">
+        SELECT GROUP_CONCAT(c.comment_id) as commentIds,GROUP_CONCAT(c.user_id) as userIds,GROUP_CONCAT(u.user_nickName) as userNames,c.article_id as articleId,a.article_title as articleTitle,DATE(c.comment_date) as commentDate FROM zj_comments c
+        LEFT JOIN zj_users u ON c.`user_id` = u.`user_id`
+        LEFT JOIN zj_articles a ON c.`article_id` = a.`article_id`
+        WHERE c.parent_comment_id IN (SELECT comment_id FROM zj_comments WHERE user_id = #{userId}) AND c.is_read = 0
+        GROUP BY DATE(c.comment_date),c.article_id
+        ORDER BY MAX(c.comment_date) DESC
+    </select>
+
+    <!-- 清空信息(单个和多个)-->
+    <update id="deleteNoReadCommentInfo" parameterType="java.util.List">
+        update zj_comments set is_read = 1
+        <if test="list!=null">
+            where comment_id in
+            <foreach collection="list" item="number" index="index" open="(" separator="," close=")">
+                #{number }
+            </foreach>
+        </if>
+    </update>
+
+</mapper>
