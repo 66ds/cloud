@@ -29,6 +29,7 @@
     <option name="ignoredFiles">
       <set>
         <option value="$PROJECT_DIR$/2/pom.xml" />
+        <option value="$PROJECT_DIR$/SY/pom.xml" />
         <option value="$PROJECT_DIR$/blog-api/pom.xml" />
         <option value="$PROJECT_DIR$/blog-auth/pom.xml" />
         <option value="$PROJECT_DIR$/blog-friend/pom.xml" />

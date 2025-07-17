@@ -28,7 +28,6 @@
         <module>blog-file</module>
         <module>blog-rabbitmq</module>
         <module>blog-websocket</module>
-        <module>SY</module>
     </modules>
     <properties>
 
