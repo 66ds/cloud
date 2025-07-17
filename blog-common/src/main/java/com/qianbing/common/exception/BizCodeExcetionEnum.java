@@ -1,6 +1,8 @@
 package com.qianbing.common.exception;
 
 public enum BizCodeExcetionEnum {
+    ARTICLE_ALEARDY_EXIST(10007,"文章已存在,请勿重新添加"),
+
     CODE_ERROR(10006,"验证码错误"),
 
     CODE_NOT_NULL(10005,"验证码不能为空"),

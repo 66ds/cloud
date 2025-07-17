@@ -55,4 +55,14 @@ public class LabelsController {
         return labelsService.getLabelsByIds(labelIds);
     }
 
+    /**
+     * 插入多个标签信息
+     * @param labelsEntities
+     * @return
+     */
+    @RequestMapping("/saveLabelsEntities")
+    public void saveLabelEntities(@RequestBody List<LabelsEntity> labelsEntities){
+         labelsService.saveLabelEntities(labelsEntities);
+    }
+
 }

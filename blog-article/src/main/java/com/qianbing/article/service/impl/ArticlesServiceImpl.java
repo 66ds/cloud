@@ -9,25 +9,29 @@ import com.qianbing.article.feign.LabelsFeignClient;
 import com.qianbing.article.feign.SearchFeignClient;
 import com.qianbing.article.feign.SortFeignClient;
 import com.qianbing.article.feign.UserFeignClient;
+import com.qianbing.article.service.SetArtitleLabelService;
+import com.qianbing.article.vo.ArticlesVo;
+import com.qianbing.common.Result.R;
 import com.qianbing.common.constrant.CommentsConstrant;
 import com.qianbing.common.entity.*;
 import com.qianbing.article.dao.ArticlesDao;
 import com.qianbing.article.service.ArticlesService;
+import com.qianbing.common.exception.BizCodeExcetionEnum;
 import com.qianbing.common.exception.BlogException;
 import com.qianbing.common.utils.Constant;
 import com.qianbing.common.utils.Query;
 import com.qianbing.common.vo.SearchParamVo;
 import com.qianbing.common.vo.SearchResultVo;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -39,6 +43,9 @@ public class ArticlesServiceImpl extends ServiceImpl<ArticlesDao, ArticlesEntity
 
     @Autowired
     private SetArticleSortDao setArticleSortDao;
+
+    @Autowired
+    private SetArtitleLabelService setArtitleLabelService;
 
     @Autowired
     private SetArtitleLabelDao setArtitleLabelDao;
@@ -54,6 +61,9 @@ public class ArticlesServiceImpl extends ServiceImpl<ArticlesDao, ArticlesEntity
 
     @Autowired
     private SortFeignClient sortFeignClient;
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
     /**
      * 博客前台(elasticsearch-查所有文章内容信息)
@@ -136,6 +146,86 @@ public class ArticlesServiceImpl extends ServiceImpl<ArticlesDao, ArticlesEntity
         SetArtitleSortEntity setArtitleSortEntity = setArticleSortDao.selectOne(
                 new QueryWrapper<SetArtitleSortEntity>().eq("article_id", articleId));
         return setArtitleSortEntity.getSortId();
+    }
+    /**
+     * 添加文章信息
+     * @param vo
+     * @return
+     */
+    @Transactional
+    @Override
+    public R addArticleInfo(ArticlesVo vo) {
+        // 1. 检查文章标题是否已存在
+        if (isArticleTitleExists(vo.getArticleTitle())) {
+            return R.error(BizCodeExcetionEnum.ARTICLE_ALEARDY_EXIST.getCode(),
+                    BizCodeExcetionEnum.ARTICLE_ALEARDY_EXIST.getMsg());
+        }
+        // 2. 初始化文章信息
+        ArticlesEntity article = convertVoToEntity(vo);
+        this.baseMapper.insert(article);
+        // 3. 保存标签及关系
+        List<LabelsEntity> labels = createAndSaveLabels(vo.getLabelNames(), article.getUserId());
+        saveArticleLabelRelations(article.getArticleId(), labels);
+        // 4. 保存文章-分类关系
+        saveArticleSortRelation(article.getArticleId(), vo.getSortIds());
+        // 5. 通知延迟发布（MQ）
+        //TODO 如果设置定时发表，通知MQ接收消息
+        rabbitTemplate.convertAndSend("article.delay.direct","article.delay.key", article.getArticleId(),
+                message -> {
+                    message.getMessageProperties().setDelayLong(100L);
+                    return message;
+                });
+        return R.ok();
+    }
+
+    private boolean isArticleTitleExists(String title) {
+        QueryWrapper<ArticlesEntity> wrapper = new QueryWrapper<ArticlesEntity>()
+                .eq("article_title", title);
+        return this.baseMapper.selectOne(wrapper) != null;
+    }
+
+    //TODO 设置常量
+    private ArticlesEntity convertVoToEntity(ArticlesVo vo) {
+        ArticlesEntity entity = new ArticlesEntity();
+        BeanUtils.copyProperties(vo, entity);
+        entity.setArticleDate(new Date());
+        entity.setArticleLikeCount(0L);
+        entity.setArticleViews(0L);
+        entity.setArticleCommentCount(0L);
+        entity.setIsDelete(0);
+        return entity;
+    }
+
+    private List<LabelsEntity> createAndSaveLabels(List<String> labelNames, Long userId) {
+        List<LabelsEntity> labels = labelNames.stream().map(name -> {
+            LabelsEntity label = new LabelsEntity();
+            label.setLabelName(name);
+            label.setUserId(userId);
+            return label;
+        }).collect(Collectors.toList());
+
+        labelsFeignClient.saveLabelEntities(labels);
+        return labels;
+    }
+
+    private void saveArticleLabelRelations(Long articleId, List<LabelsEntity> labels) {
+        List<SetArtitleLabelEntity> relations = labels.stream().map(label -> {
+            SetArtitleLabelEntity rel = new SetArtitleLabelEntity();
+            rel.setArticleId(articleId);
+            rel.setLabelId(label.getLabelId());
+            return rel;
+        }).collect(Collectors.toList());
+
+        setArtitleLabelService.saveBatch(relations);
+    }
+
+    private void saveArticleSortRelation(Long articleId, List<Long> sortIds) {
+        if (sortIds == null || sortIds.isEmpty()) return;
+        Long lastSortId = sortIds.get(sortIds.size() - 1);
+        SetArtitleSortEntity relation = new SetArtitleSortEntity();
+        relation.setArticleId(articleId);
+        relation.setSortId(lastSortId);
+        setArticleSortDao.insert(relation);
     }
 
 

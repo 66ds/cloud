@@ -17,6 +17,7 @@ import com.qianbing.common.utils.Query;
 import com.qianbing.common.vo.CommonVo;
 import com.qianbing.common.vo.DigVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -30,6 +31,9 @@ public class LikeArticleUserServiceImpl extends ServiceImpl<LikeArticleUserDao, 
 
     @Autowired
     private ArticlesDao articlesDao;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -74,6 +78,27 @@ public class LikeArticleUserServiceImpl extends ServiceImpl<LikeArticleUserDao, 
         articlesEntity.setArticleLikeCount(articlesEntity.getArticleLikeCount()+1);
         articlesDao.updateById(articlesEntity);
         return R.ok().setData(entity);
+    }
+
+    //TODO 用户点赞文章
+    //TODO 接口要限流
+    //TODO 定时同步到数据库
+    public R likeArticle1(Long articleId,Long userID){
+        String redisKey = "article:like:"+articleId;
+        //判断用户是不是点赞了文章
+        Boolean isMember = redisTemplate.opsForSet().isMember(redisKey,userID);
+        if(isMember){
+            //如果点赞过了，应该取消点赞
+            redisTemplate.opsForSet().remove(redisKey,userID);
+            //用户点赞数量-1
+            redisTemplate.opsForValue().decrement("article:like:count"+articleId);
+            return R.error(400,"文章已经点赞过了");
+        }
+        //添加点赞
+        redisTemplate.opsForSet().add(redisKey,userID);
+        //用户文章点赞数量+1
+        redisTemplate.opsForValue().increment("article:like:count"+articleId);
+        return R.ok();
     }
 
     @Override

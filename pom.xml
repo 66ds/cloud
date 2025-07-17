@@ -17,7 +17,6 @@
     <modules>
         <module>blog-gateway</module>
         <module>blog-article</module>
-        <module>blog-auth</module>
         <module>blog-common</module>
         <module>blog-user</module>
         <module>blog-search</module>
@@ -27,6 +26,9 @@
         <module>blog-link</module>
         <module>blog-message</module>
         <module>blog-file</module>
+        <module>blog-rabbitmq</module>
+        <module>blog-websocket</module>
+        <module>SY</module>
     </modules>
     <properties>
 

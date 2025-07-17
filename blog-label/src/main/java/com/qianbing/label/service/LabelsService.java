@@ -1,6 +1,7 @@
 package com.qianbing.label.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.qianbing.common.Result.R;
 import com.qianbing.common.entity.LabelsEntity;
 import com.qianbing.common.utils.PageUtils;
 
@@ -31,5 +32,12 @@ public interface LabelsService extends IService<LabelsEntity> {
      * @return
      */
     List<LabelsEntity> getLabelsByIds(List<Long> labelIds);
+
+    /**
+     * 插入多个标签信息
+     * @param labelsEntities
+     * @return
+     */
+    void saveLabelEntities(List<LabelsEntity> labelsEntities);
 }
 

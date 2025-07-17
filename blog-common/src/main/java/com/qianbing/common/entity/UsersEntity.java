@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.NotBlank;
+//import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -40,7 +40,7 @@ public class UsersEntity implements Serializable {
 	/**
 	 * $column.comments
 	 */
-	@NotBlank(message = "密码不能为空")
+//	@NotBlank(message = "密码不能为空")
 	private String userPassword;
 	/**
 	 * $column.comments
@@ -67,7 +67,7 @@ public class UsersEntity implements Serializable {
 	/**
 	 * $column.comments
 	 */
-	@NotBlank(message = "手机号不能为空")
+//	@NotBlank(message = "手机号不能为空")
 	private String userTelephoneNumber;
 	/**
 	 * $column.comments

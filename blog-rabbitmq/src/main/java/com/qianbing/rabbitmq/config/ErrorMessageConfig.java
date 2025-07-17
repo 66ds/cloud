@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
  * 重试耗尽后，将失败消息投递到指定的交换机
  */
 @Configuration
-@ConditionalOnProperty(name="spring.rabbitmq.enabled",value = "true")
+@ConditionalOnProperty(name="spring.rabbitmq.listener.simple.retry.enabled",value = "true")
 public class ErrorMessageConfig {
 
     @Bean

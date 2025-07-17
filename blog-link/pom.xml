@@ -8,7 +8,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <groupId>com.qianbing</groupId>
-    <artifactId>link</artifactId>
+    <artifactId>blog-link</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>blog-link</name>
     <description>blog-link</description>

@@ -22,12 +22,15 @@
         <option value="$PROJECT_DIR$/blog-login1/pom.xml" />
         <option value="$PROJECT_DIR$/blog-login2/pom.xml" />
         <option value="$PROJECT_DIR$/blog-rabbitmq/pom.xml" />
+        <option value="$PROJECT_DIR$/SY/pom.xml" />
+        <option value="$PROJECT_DIR$/blog-websocket/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
       <set>
         <option value="$PROJECT_DIR$/2/pom.xml" />
         <option value="$PROJECT_DIR$/blog-api/pom.xml" />
+        <option value="$PROJECT_DIR$/blog-auth/pom.xml" />
         <option value="$PROJECT_DIR$/blog-friend/pom.xml" />
         <option value="$PROJECT_DIR$/blog-login1/pom.xml" />
         <option value="$PROJECT_DIR$/blog-login2/pom.xml" />

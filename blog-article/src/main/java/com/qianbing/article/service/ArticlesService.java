@@ -3,8 +3,9 @@ package com.qianbing.article.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.qianbing.article.vo.ArticlesVo;
+import com.qianbing.common.Result.R;
 import com.qianbing.common.entity.ArticlesEntity;
-import com.qianbing.common.entity.SetArtitleSortEntity;
 import com.qianbing.common.vo.SearchParamVo;
 import com.qianbing.common.vo.SearchResultVo;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -87,5 +88,12 @@ public interface ArticlesService extends IService<ArticlesEntity> {
      * @return
      */
     Long getSortIdByArticleId(Long articleId);
+
+    /**
+     * 添加文章信息
+     * @param vo
+     * @return
+     */
+    R addArticleInfo(ArticlesVo vo);
 }
 

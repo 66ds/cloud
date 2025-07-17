@@ -3,6 +3,7 @@ package com.qianbing.article.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.qianbing.article.service.LikeArticleUserService;
+import com.qianbing.article.stategy.article.ArticleSortStrategyContext;
 import com.qianbing.common.Result.R;
 import com.qianbing.common.entity.ArticlesEntity;
 import com.qianbing.common.vo.SearchParamVo;
@@ -32,6 +33,9 @@ public class ArticlesController {
 
     @Autowired
     private LikeArticleUserService likeArticleUserService;
+
+    @Autowired
+    private ArticleSortStrategyContext articleSortStrategyContext;
 
     /**
      * 查询所有文章详情
@@ -73,6 +77,8 @@ public class ArticlesController {
     @RequestMapping("/getTop10NewestArticles")
     public R selectNewList(Long userId){
         List<ArticlesEntity> articlesEntityList = articlesService.getTop10NewestArticles(userId);
+        //articleSortStrategyContext
+        //TODO 根据策略工厂来获取文章信息
         return R.ok().setData(articlesEntityList);
     }
 
@@ -173,5 +179,20 @@ public class ArticlesController {
     public R deleteWhoDigMeInfo(@RequestBody List<Map<String,Object>> likeIds){
         return likeArticleUserService.deleteWhoDigMeInfo(likeIds);
     }
+
+    /**
+     * 添加文章信息
+     * @param vo
+     * @param request
+     * @return
+     */
+    @RequestMapping("/addArticleInfo")
+    public R addArticleInfo(@RequestBody ArticlesVo vo, HttpServletRequest request) {
+        //获取发表用户id
+        Integer id = (Integer) request.getAttribute("id");
+        vo.setUserId(id.longValue());
+        return articlesService.addArticleInfo(vo);
+    }
+
 
 }

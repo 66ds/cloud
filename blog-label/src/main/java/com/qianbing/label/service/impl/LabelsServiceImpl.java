@@ -61,4 +61,13 @@ public class LabelsServiceImpl extends ServiceImpl<LabelsDao, LabelsEntity> impl
         return labelsEntities;
     }
 
+    /**
+     * 保存标签信息
+     * @param labelsEntities
+     */
+    @Override
+    public void saveLabelEntities(List<LabelsEntity> labelsEntities) {
+        this.saveBatch(labelsEntities);
+    }
+
 }

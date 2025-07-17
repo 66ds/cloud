@@ -9,13 +9,43 @@ spring:
           filters:
             - RewritePath=/api/get/?(?<segment>.*), /$\{segment}
           order: 0
-        - id: blog-login1
-          uri: lb://blog-login1
+#        - id: blog-login1
+#          uri: lb://blog-login1
+#          predicates:
+#            - Path=/api/user/**
+#          filters:
+#            - RewritePath=/api/user/?(?<segment>.*), /$\{segment}
+#          order: 0
+        - id: Sy
+          uri: lb://Sy
           predicates:
             - Path=/api/user/**
           filters:
             - RewritePath=/api/user/?(?<segment>.*), /$\{segment}
           order: 0
+  # redis配置
+  data:
+   redis:
+    # Redis数据库索引（默认为0）
+     database: 1
+     # Redis服务器地址
+     host: 115.159.31.150
+     # Redis服务器连接端口
+     port: 6379
+     # Redis服务器连接密码（默认为空）
+     password: Qq13912758169
+     # 连接超时时间
+     timeout: 10s
+     lettuce:
+       pool:
+         # 连接池最大连接数
+         max-active: 200
+         # 连接池最大阻塞等待时间（使用负值表示没有限制）
+         max-wait: -1ms
+         # 连接池中的最大空闲连接
+         max-idle: 10
+         # 连接池中的最小空闲连接
+         min-idle: 0
 
 sa-token:
   # token 名称（同时也是 cookie 名称）
@@ -32,3 +62,5 @@ sa-token:
   token-style: uuid
   # 是否输出操作日志
   is-log: true
+
+

@@ -10,11 +10,12 @@
         <module name="blog-article" />
         <module name="blog-message" />
         <module name="blog-rabbitmq" />
-        <module name="blog-auth" />
         <module name="blog-label" />
-        <module name="link" />
+        <module name="SY" />
         <module name="blog-comment" />
+        <module name="blog-websocket" />
         <module name="blog-user" />
+        <module name="blog-link" />
         <module name="blog-sort" />
         <module name="blog-common" />
         <module name="blog-search" />
@@ -24,6 +25,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="blog-api" target="17" />
+      <module name="blog-auth" target="17" />
       <module name="blog-login1" target="17" />
       <module name="blog-login2" target="17" />
       <module name="blog-model" target="17" />
@@ -33,6 +35,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="SY" options="-parameters" />
       <module name="blog-api" options="-parameters" />
       <module name="blog-article" options="-parameters" />
       <module name="blog-auth" options="-parameters" />
@@ -41,6 +44,7 @@
       <module name="blog-file" options="-parameters" />
       <module name="blog-gateway" options="-parameters" />
       <module name="blog-label" options="-parameters" />
+      <module name="blog-link" options="-parameters" />
       <module name="blog-login1" options="-parameters" />
       <module name="blog-login2" options="-parameters" />
       <module name="blog-message" options="-parameters" />
@@ -49,8 +53,8 @@
       <module name="blog-search" options="-parameters" />
       <module name="blog-sort" options="-parameters" />
       <module name="blog-user" options="-parameters" />
+      <module name="blog-websocket" options="-parameters" />
       <module name="friend" options="-parameters" />
-      <module name="link" options="-parameters" />
       <module name="login" options="-parameters" />
     </option>
   </component>
